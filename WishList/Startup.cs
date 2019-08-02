@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,10 +23,10 @@ namespace WishList
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            var useDeveloperExceptionPage = env.IsDevelopment()
+                ? app.UseDeveloperExceptionPage()
+                : app.UseExceptionHandler("/Home/Error");
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
